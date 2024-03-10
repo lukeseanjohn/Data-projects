@@ -39,9 +39,3 @@ word_result = seperator.join(edited_user_input)
 
 print(f"{word_result}")
 
-
-
-
-
-
-
