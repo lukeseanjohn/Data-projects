@@ -39,3 +39,13 @@ word_result = seperator.join(edited_user_input)
 print(f"{word_result}")
 
 
+def happy_birthday(g):
+    
+    print(f"Happy Birthday to {g}")
+    print("Happy Birthday to you")
+    print("Happy Birthday to you")
+
+happy_birthday("Dude")
+happy_birthday("Tom")
+happy_birthday("Simon")
+
