@@ -1,0 +1,62 @@
+import pandas as pd
+import numpy as np
+
+
+import spacy
+from textblob import TextBlob 
+
+nlp = spacy.load('en_core_web_sm')
+
+# [Importing the data to be analysed]
+df = pd.read_csv('amazon_product_reviews.csv', low_memory=False)
+df.head()
+
+
+# [Function for preprocessing the data]
+def preprocess (text):
+    doc = nlp(text)
+    return ''.join([token.lemma_.lower() for token in doc if not token.is_stop and not token.is_punct])
+
+
+# [Function for analysing the sentiment of the reviews]
+def analyse_polarity(text):
+    doc = nlp(text)
+
+    blob = TextBlob(text)
+    polarity = blob.sentiment.polarity
+
+    return polarity
+
+
+# [Demonstrating the model can measure negative sentiment]
+text = "Not easy for elderly users of ads that pop up"
+polarity_score = analyse_polarity(text)
+
+# [Giving the polarity a scale consisting of positive, negative, neutral]
+if polarity_score > 0:
+    sentiment = 'positive'
+elif polarity_score < 0:
+    sentiment = 'negative'
+else:
+    sentiment = 'neutral'
+
+print(f"Text: {text}\nPolarity score:  {polarity_score}\nSentiment:{sentiment}") 
+
+# [Picking reviews from the reviews.text column using indexing]
+my_review_of_choice_A = df['reviews.text'][0]
+
+print(my_review_of_choice_A)
+
+# [Demonstrating the model can measure positive sentiment]
+text = "This product so far has not disappointed. My children love to use it and I like the ability to monitor what content they see with ease"
+polarity_score = analyse_polarity(text)
+
+if polarity_score > 0:
+    sentiment = 'positive'
+elif polarity_score < 0:
+    sentiment = 'negative'
+else:
+    sentiment = 'neutral'
+
+print(f"Text: {text}\nPolarity score:  {polarity_score}\nSentiment:{sentiment}") 
+
